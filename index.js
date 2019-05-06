@@ -19,14 +19,22 @@ import Controller from './components/controller.class';
       if (features.length) {
         controller.map.map.setFilter('dpw-c-resurfacing-hover', ['==', 'OBJECTID', features[0].properties.OBJECTID]);
       }else{
-        // features = this.queryRenderedFeatures(e.point, {
-        //   layers: ['dpw-major-resurfacing']
-        // });
-        // if (features.length) {
-        //   controller.map.map.setFilter('dpw-major-resurfacing-hover', ['==', 'GlobalID', features[0].properties.OBJECTID]);
-        // }else{
-        //   controller.map.map.setFilter('dpw-major-resurfacing-hover', ['==', 'GlobalID', ""]);
-        // }
+        features = this.queryRenderedFeatures(e.point, {
+          layers: ['dpw-major-resurfacing']
+        });
+        if (features.length) {
+          controller.map.map.setFilter('dpw-major-resurfacing-hover', ['==', 'ObjectId', features[0].properties.ObjectId]);
+        }else{
+          features = this.queryRenderedFeatures(e.point, {
+            layers: ['streetscape']
+          });
+          if (features.length) {
+            controller.map.map.setFilter('streetscape-hover', ['==', 'FID', features[0].properties.FID]);
+          }else{
+            controller.map.map.setFilter('streetscape-hover', ['==', 'FID', ""]);
+          }
+          controller.map.map.setFilter('dpw-major-resurfacing-hover', ['==', 'ObjectId', ""]);
+        }
         controller.map.map.setFilter('dpw-c-resurfacing-hover', ['==', 'OBJECTID', ""]);
       }
       controller.map.map.setFilter('dpw-residential-resurfacing-hover', ['==', 'OBJECTID', ""]);
@@ -41,13 +49,48 @@ import Controller from './components/controller.class';
     if (features.length) {
       console.log(features[0]);
       controller.updatePanel(features[0], controller);
-      controller.map.map.setFilter('census-featured', ['==', 'OBJECTID', '']);
-      controller.map.map.setFilter('census-featured', ['==', 'OBJECTID', features[0].properties.OBJECTID]);
+      controller.map.map.setFilter('dpw-residential-resurfacing-featured', ['==', 'OBJECTID', '']);
+      controller.map.map.setFilter('dpw-residential-resurfacing-featured', ['==', 'OBJECTID', features[0].properties.OBJECTID]);
       document.querySelector('.data-panel').className = 'data-panel active';
     }else{
-      // console.log('no featured');
-      // controller.map.map.setFilter('census-featured', ['==', 'OBJECTID', '']);
-      // controller.panel.clearPanel();
+      features = this.queryRenderedFeatures(e.point, {
+        layers: ['dpw-c-resurfacing']
+      });
+      if (features.length) {
+        console.log(features[0]);
+        controller.updatePanel(features[0], controller);
+        controller.map.map.setFilter('dpw-c-resurfacing-featured', ['==', 'OBJECTID', '']);
+        controller.map.map.setFilter('dpw-c-resurfacing-featured', ['==', 'OBJECTID', features[0].properties.OBJECTID]);
+        document.querySelector('.data-panel').className = 'data-panel active';
+      }else{
+        features = this.queryRenderedFeatures(e.point, {
+          layers: ['dpw-major-resurfacing']
+        });
+        if (features.length) {
+          console.log(features[0]);
+          controller.updatePanel(features[0], controller);
+          controller.map.map.setFilter('dpw-major-resurfacing-featured', ['==', 'ObjectId', '']);
+          controller.map.map.setFilter('dpw-major-resurfacing-featured', ['==', 'ObjectId', features[0].properties.ObjectId]);
+          document.querySelector('.data-panel').className = 'data-panel active';
+        }else{
+          features = this.queryRenderedFeatures(e.point, {
+            layers: ['streetscape']
+          });
+          if (features.length) {
+            console.log(features[0]);
+            controller.updatePanel(features[0], controller);
+            controller.map.map.setFilter('streetscape-featured', ['==', 'FID', '']);
+            controller.map.map.setFilter('streetscape-featured', ['==', 'FID', features[0].properties.FID]);
+            document.querySelector('.data-panel').className = 'data-panel active';
+          }else{
+            controller.map.map.setFilter('streetscape-featured', ['==', 'FID', '']);
+            controller.panel.clearPanel();
+          }
+          controller.map.map.setFilter('dpw-major-resurfacing-featured', ['==', 'OBJECTID', '']);
+        }
+        controller.map.map.setFilter('dpw-c-resurfacing-featured', ['==', 'OBJECTID', '']);
+      }
+      controller.map.map.setFilter('dpw-residential-resurfacing-featured', ['==', 'OBJECTID', '']);
     }
   });
   // controller.map.geocoder.on('result', function (ev) {

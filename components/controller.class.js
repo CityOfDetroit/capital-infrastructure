@@ -165,7 +165,7 @@ export default class Controller {
             "line-color": "#CF3234",
             "line-width": 4
           },
-          "filter": ["==", "GlobalID", ""]
+          "filter": ["==", "ObjectId", ""]
         },
         {
           "id": "dpw-major-resurfacing-featured",
@@ -177,7 +177,7 @@ export default class Controller {
             "line-color": "#004544",
             "line-width": 4
           },
-          "filter": ["==", "GlobalID", ""]
+          "filter": ["==", "ObjectId", ""]
         },
         {
           "id": "streetscape",

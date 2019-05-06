@@ -31768,34 +31768,13 @@ class Panel {
 
   buildMarkUp(data) {
     let html = `
-            <h5>${data.properties.namelsad}</h5>
+            ${data.properties.PRNAME !== undefined ? `<h5>${data.properties.PRNAME}</h5>` : ``}
+            ${data.properties.Primary_St !== undefined ? `<h5>${data.properties.Primary_St}</h5>` : ``}
             <section class="group">
-            <span class="header">Internet</span>
-            <p><strong>% of Internet Subscriptions:</strong> ${parseInt(data.properties.internet_p)}%</p>
-            <p><strong>% of No Internet Access:</strong> ${parseInt(data.properties.no_access_)}%</p>
-            <p><strong># of No Internet Access:</strong> ${parseInt(data.properties.no_interne)}</p>
-            </section>
-            <section class="group">
-            <span class="header">Population</span>
-            <p><strong>Househods:</strong> ${data.properties.households}</p>
-            <p><strong>Housing Units:</strong> ${data.properties.housing_un}</p>
-            <p><strong>Total Population:</strong> ${data.properties.total_pop_}</p>
-            <p><strong>Total Population under 5:</strong> ${data.properties.pop_under_}</p>
-            </section>
-            <section class="group">
-            <span class="header">Race and Hispanic Origin</span>
-            <p><strong># of Black or African American alone:</strong> ${data.properties.total_blac}</p>
-            <p><strong>% of Black or African American alone:</strong> ${parseInt(data.properties.black_alon)}%</p>
-            <p><strong>Hispanic Population 2010 census:</strong> ${data.properties.hispanic_c}</p>
-            <p><strong>Hispanic Population 2012-2017 ACS 5 year estimate:</strong> ${data.properties.hispanic_a}</p>
-            </section>
-            <section class="group">
-            <span class="header">Location</span>
-            <p><strong>Council District:</strong> ${data.properties.council_di}</p>
-            <p><strong>Low Response Score:</strong> ${parseInt(data.properties.low_respon)}%</p>
-            <p><strong>Hardest to Count(Mail Return Rate 2010):</strong> ${parseInt(data.properties.mrr)}%</p>
-            <p><strong>Neighborhood:</strong> ${data.properties.neighborho}</p>
-            <p><strong>Zip Codes:</strong> ${data.properties.zipcodes}</p>
+            <span class="header">Details</span>
+            <p><strong>Creator:</strong> ${data.properties.Creator}</p>
+            <p><strong>Start:</strong> ${data.properties.Projected_Start_Date}</p>
+            <p><strong>End:</strong> ${data.properties.Projected_End_Date}</p>
             </section>
             <section class="group">
             <span class="header">Learn more</span>
@@ -33898,7 +33877,7 @@ class Controller {
           "line-color": "#CF3234",
           "line-width": 4
         },
-        "filter": ["==", "GlobalID", ""]
+        "filter": ["==", "ObjectId", ""]
       }, {
         "id": "dpw-major-resurfacing-featured",
         "type": "line",
@@ -33909,7 +33888,7 @@ class Controller {
           "line-color": "#004544",
           "line-width": 4
         },
-        "filter": ["==", "GlobalID", ""]
+        "filter": ["==", "ObjectId", ""]
       }, {
         "id": "streetscape",
         "type": "line",
@@ -34252,14 +34231,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
       if (features.length) {
         controller.map.map.setFilter('dpw-c-resurfacing-hover', ['==', 'OBJECTID', features[0].properties.OBJECTID]);
       } else {
-        // features = this.queryRenderedFeatures(e.point, {
-        //   layers: ['dpw-major-resurfacing']
-        // });
-        // if (features.length) {
-        //   controller.map.map.setFilter('dpw-major-resurfacing-hover', ['==', 'GlobalID', features[0].properties.OBJECTID]);
-        // }else{
-        //   controller.map.map.setFilter('dpw-major-resurfacing-hover', ['==', 'GlobalID', ""]);
-        // }
+        features = this.queryRenderedFeatures(e.point, {
+          layers: ['dpw-major-resurfacing']
+        });
+
+        if (features.length) {
+          controller.map.map.setFilter('dpw-major-resurfacing-hover', ['==', 'ObjectId', features[0].properties.ObjectId]);
+        } else {
+          features = this.queryRenderedFeatures(e.point, {
+            layers: ['streetscape']
+          });
+
+          if (features.length) {
+            controller.map.map.setFilter('streetscape-hover', ['==', 'FID', features[0].properties.FID]);
+          } else {
+            controller.map.map.setFilter('streetscape-hover', ['==', 'FID', ""]);
+          }
+
+          controller.map.map.setFilter('dpw-major-resurfacing-hover', ['==', 'ObjectId', ""]);
+        }
+
         controller.map.map.setFilter('dpw-c-resurfacing-hover', ['==', 'OBJECTID', ""]);
       }
 
@@ -34277,12 +34268,54 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     if (features.length) {
       console.log(features[0]);
       controller.updatePanel(features[0], controller);
-      controller.map.map.setFilter('census-featured', ['==', 'OBJECTID', '']);
-      controller.map.map.setFilter('census-featured', ['==', 'OBJECTID', features[0].properties.OBJECTID]);
+      controller.map.map.setFilter('dpw-residential-resurfacing-featured', ['==', 'OBJECTID', '']);
+      controller.map.map.setFilter('dpw-residential-resurfacing-featured', ['==', 'OBJECTID', features[0].properties.OBJECTID]);
       document.querySelector('.data-panel').className = 'data-panel active';
-    } else {// console.log('no featured');
-      // controller.map.map.setFilter('census-featured', ['==', 'OBJECTID', '']);
-      // controller.panel.clearPanel();
+    } else {
+      features = this.queryRenderedFeatures(e.point, {
+        layers: ['dpw-c-resurfacing']
+      });
+
+      if (features.length) {
+        console.log(features[0]);
+        controller.updatePanel(features[0], controller);
+        controller.map.map.setFilter('dpw-c-resurfacing-featured', ['==', 'OBJECTID', '']);
+        controller.map.map.setFilter('dpw-c-resurfacing-featured', ['==', 'OBJECTID', features[0].properties.OBJECTID]);
+        document.querySelector('.data-panel').className = 'data-panel active';
+      } else {
+        features = this.queryRenderedFeatures(e.point, {
+          layers: ['dpw-major-resurfacing']
+        });
+
+        if (features.length) {
+          console.log(features[0]);
+          controller.updatePanel(features[0], controller);
+          controller.map.map.setFilter('dpw-major-resurfacing-featured', ['==', 'ObjectId', '']);
+          controller.map.map.setFilter('dpw-major-resurfacing-featured', ['==', 'ObjectId', features[0].properties.ObjectId]);
+          document.querySelector('.data-panel').className = 'data-panel active';
+        } else {
+          features = this.queryRenderedFeatures(e.point, {
+            layers: ['streetscape']
+          });
+
+          if (features.length) {
+            console.log(features[0]);
+            controller.updatePanel(features[0], controller);
+            controller.map.map.setFilter('streetscape-featured', ['==', 'FID', '']);
+            controller.map.map.setFilter('streetscape-featured', ['==', 'FID', features[0].properties.FID]);
+            document.querySelector('.data-panel').className = 'data-panel active';
+          } else {
+            controller.map.map.setFilter('streetscape-featured', ['==', 'FID', '']);
+            controller.panel.clearPanel();
+          }
+
+          controller.map.map.setFilter('dpw-major-resurfacing-featured', ['==', 'OBJECTID', '']);
+        }
+
+        controller.map.map.setFilter('dpw-c-resurfacing-featured', ['==', 'OBJECTID', '']);
+      }
+
+      controller.map.map.setFilter('dpw-residential-resurfacing-featured', ['==', 'OBJECTID', '']);
     }
   }); // controller.map.geocoder.on('result', function (ev) {
   //   // console.log(ev);
@@ -34368,7 +34401,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50499" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55076" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
