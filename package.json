@@ -1,0 +1,39 @@
+{
+  "name": "capital-infrastructure",
+  "version": "1.0.0",
+  "description": "List of capital projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:CityOfDetroit/capital-infrastructure.git"
+  },
+  "keywords": [
+    "projects",
+    "capital",
+    "roads",
+    "closures"
+  ],
+  "author": "Edgar Montes",
+  "license": "MIT",
+  "bugs": {
+    "url": "git@github.com:CityOfDetroit/capital-infrastructure.git"
+  },
+  "homepage": "git@github.com:CityOfDetroit/capital-infrastructure.git#readme",
+  "dependencies": {
+    "@mapbox/mapbox-gl-geocoder": "^2.3.0",
+    "@turf/simplify": "^5.1.5",
+    "@turf/turf": "^5.1.6",
+    "mapbox-gl": "^0.53.0",
+    "terraformer-arcgis-parser": "^1.1.0"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.7.2",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "cssnano": "^4.1.10",
+    "sass": "^1.17.3"
+  }
+}
