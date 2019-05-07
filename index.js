@@ -1,4 +1,5 @@
 import Controller from './components/controller.class';
+const turf = require('@turf/turf');
 
 (function start() {
   
@@ -42,7 +43,10 @@ import Controller from './components/controller.class';
     this.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
   });
   controller.map.map.on('click', function (e, parent = this) {
-    // console.log(e);
+    console.log(e);
+    let point = turf.point([e.lngLat.lng, e.lngLat.lat]);
+    console.log(point);
+    controller.map.map.getSource('single-point').setData(point.geometry);
     let features = this.queryRenderedFeatures(e.point, {
       layers: ['dpw-residential-resurfacing']
     });
@@ -85,8 +89,9 @@ import Controller from './components/controller.class';
           }else{
             controller.map.map.setFilter('streetscape-featured', ['==', 'FID', '']);
             controller.panel.clearPanel();
+            document.querySelector('.data-panel').className = 'data-panel';
           }
-          controller.map.map.setFilter('dpw-major-resurfacing-featured', ['==', 'OBJECTID', '']);
+          controller.map.map.setFilter('dpw-major-resurfacing-featured', ['==', 'ObjectId', '']);
         }
         controller.map.map.setFilter('dpw-c-resurfacing-featured', ['==', 'OBJECTID', '']);
       }
@@ -103,33 +108,33 @@ import Controller from './components/controller.class';
   //   }
   // });
   // document.getElementById('population').value = null;
-  document.getElementById('hardest').value = null;
-  document.getElementById('low-response').value = null;
-  document.getElementById('population').value = null;
-  document.getElementById('no-internet').value = null;
+  // document.getElementById('hardest').value = null;
+  // document.getElementById('low-response').value = null;
+  // document.getElementById('population').value = null;
+  // document.getElementById('no-internet').value = null;
   document.getElementById('close-panel-btn').addEventListener('click', function () {
     controller.panel.clearPanel();
     (document.querySelector('.data-panel.active') != null) ?  document.querySelector('.data-panel.active').className = 'data-panel' : 0;
   });
-  document.getElementById('close-filters-btn').addEventListener('click', function () {
-    document.querySelector('.filters.active').className = 'filters';
-  });
-  document.getElementById('filters').addEventListener('click', function () {
-    document.querySelector('.filters').className = 'filters active';
-    document.querySelector('.filters.active').focus();
-  });
-  const intFilters = document.querySelectorAll('.interactive-filters');
-  intFilters.forEach(function (btn) {
-    btn.addEventListener('change', function (ev) {
-      controller.filterMap(ev, controller);
-    });
-  });
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  filterBtns.forEach(function (btn) {
-    btn.addEventListener('click', function (ev) {
-      controller.removeFilter(ev, controller);
-    });
-  });
+  // document.getElementById('close-filters-btn').addEventListener('click', function () {
+  //   document.querySelector('.filters.active').className = 'filters';
+  // });
+  // document.getElementById('filters').addEventListener('click', function () {
+  //   document.querySelector('.filters').className = 'filters active';
+  //   document.querySelector('.filters.active').focus();
+  // });
+  // const intFilters = document.querySelectorAll('.interactive-filters');
+  // intFilters.forEach(function (btn) {
+  //   btn.addEventListener('change', function (ev) {
+  //     controller.filterMap(ev, controller);
+  //   });
+  // });
+  // const filterBtns = document.querySelectorAll('.filter-btn');
+  // filterBtns.forEach(function (btn) {
+  //   btn.addEventListener('click', function (ev) {
+  //     controller.removeFilter(ev, controller);
+  //   });
+  // });
   const startingBtns = document.querySelectorAll('#user-type-section button');
   startingBtns.forEach(function (btn) {
     btn.addEventListener('click', function (ev) {

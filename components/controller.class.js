@@ -82,7 +82,7 @@ export default class Controller {
           "layout": {},
           "paint": {
             "line-color": "#004544",
-            "line-width": 4
+            "line-width": 5
           }
         },
         {
@@ -93,7 +93,7 @@ export default class Controller {
           "layout": {},
           "paint": {
             "line-color": "#CF3234",
-            "line-width": 4
+            "line-width": 5
           },
           "filter": ["==", "OBJECTID", ""]
         },
@@ -105,7 +105,7 @@ export default class Controller {
           "layout": {},
           "paint": {
             "line-color": "#CF3234",
-            "line-width": 4
+            "line-width": 5
           },
           "filter": ["==", "OBJECTID", ""]
         },
@@ -117,7 +117,7 @@ export default class Controller {
           "layout": {},
           "paint": {
             "line-color": "#004544",
-            "line-width": 4
+            "line-width": 5
           }
         },
         {
@@ -128,7 +128,7 @@ export default class Controller {
           "layout": {},
           "paint": {
             "line-color": "#CF3234",
-            "line-width": 4
+            "line-width": 5
           },
           "filter": ["==", "OBJECTID", ""]
         },
@@ -140,7 +140,7 @@ export default class Controller {
           "layout": {},
           "paint": {
             "line-color": "#CF3234",
-            "line-width": 4
+            "line-width": 5
           },
           "filter": ["==", "OBJECTID", ""]
         },
@@ -152,7 +152,7 @@ export default class Controller {
           "layout": {},
           "paint": {
             "line-color": "#004544",
-            "line-width": 4
+            "line-width": 5
           }
         },
         {
@@ -163,7 +163,7 @@ export default class Controller {
           "layout": {},
           "paint": {
             "line-color": "#CF3234",
-            "line-width": 4
+            "line-width": 5
           },
           "filter": ["==", "ObjectId", ""]
         },
@@ -175,7 +175,7 @@ export default class Controller {
           "layout": {},
           "paint": {
             "line-color": "#004544",
-            "line-width": 4
+            "line-width": 5
           },
           "filter": ["==", "ObjectId", ""]
         },
@@ -187,7 +187,7 @@ export default class Controller {
           "layout": {},
           "paint": {
             "line-color": "#E48F22",
-            "line-width": 4
+            "line-width": 5
           }
         },
         {
@@ -198,7 +198,7 @@ export default class Controller {
           "layout": {},
           "paint": {
             "line-color": "#CF3234",
-            "line-width": 4
+            "line-width": 5
           },
           "filter": ["==", "FID", ""]
         },
@@ -210,7 +210,7 @@ export default class Controller {
           "layout": {},
           "paint": {
             "line-color": "#CF3234",
-            "line-width": 4
+            "line-width": 5
           },
           "filter": ["==", "FID", ""]
         },
